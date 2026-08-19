@@ -1,0 +1,4 @@
+com/example/secrets/controller/SecretsController.class
+com/example/secrets/service/SecretsService.class
+com/example/secrets/SecretsApplication.class
+com/example/secrets/model/Secrets.class
