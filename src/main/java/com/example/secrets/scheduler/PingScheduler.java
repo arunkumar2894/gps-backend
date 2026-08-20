@@ -13,7 +13,6 @@ public class PingScheduler {
     private static final Logger logger = LoggerFactory.getLogger(PingScheduler.class);
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String targetUrl = "https://gps-backend-h7cw.onrender.com/heartbeat";
 
     @Value("${api.url}")
     private String apiUrl;

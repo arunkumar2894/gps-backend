@@ -19,22 +19,23 @@ public class SecretsController {
         this.updateToken = updateToken;
     }
 
-    @GetMapping
-    public ResponseEntity<Map<String, String>> getSecrets() {
-        return ResponseEntity.ok(service.getAll());
-    }
+//    @GetMapping
+//    public ResponseEntity<Map<String, String>> getSecrets() {
+//        return ResponseEntity.ok(service.getAll());
+//    }
 
     /**
      * Update a specific secret identified by {api} (mapsApiKey or deviceUuid).
      * Path variables: {token} (must match app.update.token), {api} (key name)
      * Request body JSON: { "value": "new-value" }
      */
-    @GetMapping("/{token}/{api}")
-    public ResponseEntity<?> updateSecret(@PathVariable String token,
+    @GetMapping("/{updateToken}/{token}/{api}")
+    public ResponseEntity<?> updateSecret(@PathVariable String updateToken,
+                                          @PathVariable String token,
                                           @PathVariable String api) {
-//        if (!updateToken.equals(token)) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "invalid token"));
-//        }
+        if (!this.updateToken.equals(updateToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "invalid token"));
+        }
         boolean ok = service.update(api, token);
         if (!ok) {
             return ResponseEntity.badRequest().body(Map.of("error", "invalid api key"));
@@ -42,17 +43,16 @@ public class SecretsController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    @GetMapping("/{token}")
-    public ResponseEntity<?> updateSecret(@PathVariable String token) {
-//        if (!updateToken.equals(token)) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "invalid token"));
-//        }
+    @GetMapping("/{updateToken}/{token}")
+    public ResponseEntity<?> updateSecret(@PathVariable String updateToken,
+                                          @PathVariable String token) {
+        if (!this.updateToken.equals(updateToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "invalid token"));
+        }
         boolean ok = service.update(token);
         if (!ok) {
             return ResponseEntity.badRequest().body(Map.of("error", "invalid api key"));
         }
         return ResponseEntity.ok(service.getAll());
     }
-
-
 }

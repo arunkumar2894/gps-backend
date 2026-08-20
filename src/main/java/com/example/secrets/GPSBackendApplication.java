@@ -6,8 +6,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class SecretsApplication {
+public class GPSBackendApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SecretsApplication.class, args);
+        SpringApplication.run(GPSBackendApplication.class, args);
     }
 }
