@@ -14,6 +14,14 @@
 
 <div id="offline-banner">⚠️ Network connection lost. Reconnecting...</div>
 
+<button id="drawer-toggle" class="btn drawer-toggle" onclick="toggleAppDrawer()" type="button" aria-label="Open or close vehicle details drawer" aria-expanded="true">
+    <span class="hamburger" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+    </span>
+</button>
+
 <header>
     <h1>Live Location Viewer</h1>
     <div class="header-controls">
@@ -29,21 +37,30 @@
             </select>
             <span id="countdown-timer">(10s)</span>
         </div>
+        <div class="status-box">
+            <span class="status-label">Status:</span>
+            <span class="pulse-dot" id="pulse-indicator"></span>
+            <span class="status-badge" id="status">Live</span>
+        </div>
         <button id="refresh-loc-btn" class="btn" onclick="fetchLocation()">Refresh Location</button>
-        <button id="refresh-token-btn" class="btn btn-green" onclick="handleRefreshToken()">RefreshToken</button>
     </div>
 </header>
 
-<div id="info-panel">
-    <div class="info-item status-wrapper">
-        <span class="pulse-dot" id="pulse-indicator"></span>
-        Status: <span class="status-badge" id="status">Initializing...</span>
+<div id="drawer-backdrop" class="drawer-backdrop" onclick="toggleAppDrawer(false)"></div>
+
+<aside id="app-drawer" class="app-drawer" aria-label="Vehicle details drawer">
+    <div class="drawer-header">
+        <h2>Vehicle Details</h2>
+        <button id="drawer-close" class="drawer-close" onclick="toggleAppDrawer(false)" type="button" aria-label="Close drawer">×</button>
     </div>
-    <div class="info-item">Vehicle No: <span id="vehicle-no">--</span></div>
-    <div class="info-item">Lat/Lng: <span id="coords">--</span></div>
-    <div class="info-item">Speed: <span id="speed">--</span></div>
-    <div class="info-item">Last Update: <span id="last-updated">--</span></div>
-</div>
+
+    <div id="info-panel">
+        <div class="info-item"><span class="info-label">Vehicle No:</span> <span id="vehicle-no">TN 13 AE 1950</span></div>
+        <div class="info-item"><span class="info-label">Lat/Lng:</span> <span id="coords">13.103869, 80.155762</span></div>
+        <div class="info-item"><span class="info-label">Speed:</span> <span id="speed">36 km/h</span></div>
+        <div class="info-item"><span class="info-label">Last Update:</span> <span id="last-updated">Aug 20, 2026, 8:44:21 AM</span></div>
+    </div>
+</aside>
 
 <div id="map-container">
     <div id="map"></div>
@@ -313,6 +330,20 @@
         } else {
             statusEl.className = "status-badge badge-alert";
             dotEl.classList.add("dot-error");
+        }
+    }
+
+    function toggleAppDrawer(isOpen = null) {
+        const drawer = document.getElementById("app-drawer");
+        const backdrop = document.getElementById("drawer-backdrop");
+        const toggle = document.getElementById("drawer-toggle");
+        const nextState = isOpen === null ? !drawer.classList.contains("open") : isOpen;
+
+        drawer.classList.toggle("open", nextState);
+        drawer.classList.toggle("closed", !nextState);
+        backdrop.classList.toggle("active", nextState);
+        if (toggle) {
+            toggle.setAttribute("aria-expanded", String(nextState));
         }
     }
 

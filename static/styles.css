@@ -29,7 +29,7 @@ body {
 header {
     background-color: #1a73e8;
     color: #ffffff;
-    padding: 12px 20px;
+    padding: 12px 20px 12px 68px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     z-index: 10;
     display: flex;
@@ -87,16 +87,134 @@ header h1 {
     font-weight: bold;
 }
 
-#info-panel {
+.drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 20;
+}
+
+.drawer-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.app-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(360px, 90vw);
+    height: 100vh;
     background: #ffffff;
-    padding: 10px 20px;
-    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.12);
+    border-right: 1px solid #dfe3e8;
+    transform: translateX(-102%);
+    transition: transform 0.25s ease;
+    z-index: 30;
     display: flex;
-    gap: 18px;
-    font-size: 0.85rem;
-    color: #333333;
+    flex-direction: column;
+}
+
+.app-drawer.open {
+    transform: translateX(0);
+}
+
+.drawer-toggle {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    display: inline-flex;
     align-items: center;
-    flex-wrap: wrap;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 10px;
+    z-index: 40;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 18px;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: 2px;
+}
+
+.status-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 6px 10px;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-label {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px 12px;
+    border-bottom: 1px solid #edf1f5;
+    background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+}
+
+.drawer-header h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.drawer-close {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: #4b5563;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#info-panel {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-size: 0.92rem;
+    color: #333333;
+    overflow-y: auto;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid #edf2f7;
+    border-radius: 10px;
+    line-height: 1.4;
 }
 
 .info-item span {
@@ -104,10 +222,23 @@ header h1 {
     color: #1a73e8;
 }
 
+.info-label {
+    color: #4b5563 !important;
+    font-weight: 600;
+    min-width: 88px;
+}
+
 .status-wrapper {
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: space-between;
+    gap: 10px;
+    background: #eefaf2;
+    border-color: #d7f0df;
+}
+
+.status-wrapper .status-badge {
+    margin-left: auto;
 }
 
 .pulse-dot {
